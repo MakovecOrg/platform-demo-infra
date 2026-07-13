@@ -39,15 +39,16 @@ EOF
 }
 
 data "azurerm_storage_container" "web_container" {
-  name               = "$web"
-  storage_account_id = azurerm_storage_account.web_storage.id
+  name                 = "$web"
+  storage_account_name = azurerm_storage_account.web_storage.name
 }
 
 resource "azurerm_storage_blob" "index_file" {
-  name                 = "index.html"
-  storage_container_id = data.azurerm_storage_container.web_container.id
-  type                 = "Block"
-  source               = "index.html"
+  name                   = "index.html"
+  storage_account_name   = azurerm_storage_account_web_storage.name
+  storage_container_name = data.azurerm_storage_container.web_container.name
+  type                   = "Block"
+  source                 = "index.html"
 
   depends_on = [local_file.index]
 
