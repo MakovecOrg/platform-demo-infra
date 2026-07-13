@@ -9,7 +9,7 @@ output "sa" {
 }
 
 output "sa_cont" {
-  value       = azurerm_storage_container.web_container.name
+  value       = data.azurerm_storage_container.web_container.name
   description = "Container"
 }
 
