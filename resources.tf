@@ -45,7 +45,7 @@ data "azurerm_storage_container" "web_container" {
 
 resource "azurerm_storage_blob" "index_file" {
   name                   = "index.html"
-  storage_account_name   = azurerm_storage_account_web_storage.name
+  storage_account_name   = azurerm_storage_account.web_storage.name
   storage_container_name = data.azurerm_storage_container.web_container.name
   type                   = "Block"
   source                 = "index.html"
