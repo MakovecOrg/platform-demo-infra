@@ -20,8 +20,6 @@ resource "azurerm_storage_account" "web_storage" {
 resource "azurerm_storage_account_static_website" "web" {
   storage_account_id = azurerm_storage_account.web_storage.id
   index_document     = "index.html"
-
-  depends_on = [local_file.index]
 }
 
 resource "local_file" "index" {
@@ -38,4 +36,19 @@ resource "local_file" "index" {
 </body>
 </html>
 EOF
+}
+
+data "azurerm_storage_container" "web_container" {
+  name               = "$web"
+  storage_account_id = azurerm_storage_account.web_storage.id
+}
+
+resource "azurerm_storage_blob" "index_file" {
+  name                 = "index.html"
+  storage_container_id = data.azurerm_storage_container.web_container.id
+  type                 = "Block"
+  source               = "index.html"
+
+  depends_on = [local_file.index]
+
 }
