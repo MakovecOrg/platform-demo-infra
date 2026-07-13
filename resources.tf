@@ -19,7 +19,9 @@ resource "azurerm_storage_account" "web_storage" {
 
 resource "azurerm_storage_account_static_website" "web" {
   storage_account_id = azurerm_storage_account.web_storage.id
-  index_document     = local_file.index
+  index_document     = "index.html"
+
+  depends_on = [local_file.index]
 }
 
 resource "local_file" "index" {
