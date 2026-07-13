@@ -32,7 +32,7 @@ resource "local_file" "index" {
 </head>
 <body>
     <h1>Deployment Successful!</h1>
-    <p><strong>Commit ID:</strong> ${var.commit_id}</p>
+    <p><strong>Commit ID:</strong> ${var.commit_id} </p>
 </body>
 </html>
 EOF
@@ -48,6 +48,7 @@ resource "azurerm_storage_blob" "index_file" {
   storage_account_name   = azurerm_storage_account.web_storage.name
   storage_container_name = data.azurerm_storage_container.web_container.name
   type                   = "Block"
+  content_type           = "text/html"
   source                 = "index.html"
 
   depends_on = [local_file.index]
