@@ -1,5 +1,4 @@
-variable "commit_id" {
-  type = string
-  description = "Commit ID"
-  default = "commit-id-def"
+variable "app_deployer_object_id" {
+  type        = string
+  description = "Service Principal for deploying the app"
 }

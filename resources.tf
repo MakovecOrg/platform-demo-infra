@@ -22,3 +22,8 @@ resource "azurerm_storage_account_static_website" "web" {
   index_document     = "index.html"
 }
 
+resource "azurerm_role_asignment" "blob_contributor" {
+  scope                = azurerm_storage_account.web_storage.id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = var.app_deployer_object_id
+}
