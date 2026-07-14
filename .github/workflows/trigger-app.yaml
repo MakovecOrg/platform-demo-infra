@@ -8,6 +8,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: Check token
+        env:
+          GH_TOKEN: ${{ secrets.GH_PLATFORM_TOKEN }}
+        run: |
+          echo "Length = ${#GH_TOKEN}"
+
+      - name: Test GitHub token
+        env:
+          GH_TOKEN: ${{ secrets.GH_PLATFORM_TOKEN }}
+        run: |
+          curl \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/user
+    
       - name: Trigger application deployment
         run: |
           curl \
