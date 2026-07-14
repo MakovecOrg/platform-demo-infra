@@ -12,6 +12,8 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
+      TF_VAR_app_deployer_object_id: ${{ vars.APP_DEPLOYER_OBJECT_ID }}
     
     steps:
     - uses: actions/checkout@v4
@@ -24,6 +26,6 @@ jobs:
 
     - name: Terraform Plan
       run: terraform plan
-
+      
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var="app_deployer_object_id=${{ vars.APP_DEPLOYER_OBJECT_ID }}"
+      run: terraform apply -auto-approve
