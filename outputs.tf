@@ -7,13 +7,3 @@ output "sa" {
   value       = azurerm_storage_account.web_storage.id
   description = "Storage account"
 }
-
-output "sa_cont" {
-  value       = data.azurerm_storage_container.web_container.name
-  description = "Container"
-}
-
-output "sa_cont_addr" {
-  value       = azurerm_storage_blob.index_file.name
-  description = "Web root"
-}
