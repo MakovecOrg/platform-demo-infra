@@ -9,26 +9,18 @@ jobs:
 
     steps:
 
-      - name: Check token
-        env:
-          GH_TOKEN: ${{ secrets.GH_PLATFORM_SECRET }}
-        run: |
-          echo "Length = ${#GH_TOKEN}"
-
-      - name: Test GitHub token
-        env:
-          GH_TOKEN: ${{ secrets.GH_PLATFORM_SECRET }}
-        run: |
-          curl \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/user
-    
       - name: Trigger application deployment
+        env:
+          GH_TOKEN: ${{ secrets.GH_PLATFORM_SECRET }}
         run: |
-          curl \
+          HTTP_CODE=$(curl \
+            -s \
+            -o /dev/null \
+            -w "%{http_code}" \
             -X POST \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GH_PLATFORM_SECRET }}" \
+            -H "Authorization: Bearer $GH_TOKEN" \
             https://api.github.com/repos/MakovecOrg/platform-demo-app/dispatches \
             -d '{"event_type":"deploy"}'
+
+          echo "Response: $HTTP_CODE"
